@@ -9,8 +9,6 @@
     "skipLibCheck": true
   },
   "include": [
-    "tests",
-    "utils",
-    "playwright.config.ts"
+      "**/*.ts"
   ]
 }
