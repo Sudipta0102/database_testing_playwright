@@ -11,6 +11,6 @@ node_modules/
 # Local Environment variables (secrets)
 .env
 .env.*
-!.env.example
+#!.env.example
 
 tests/example.spec.ts
