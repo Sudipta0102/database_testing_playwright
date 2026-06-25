@@ -1,0 +1,16 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+
+# Local Environment variables (secrets)
+.env
+.env.*
+!.env.example
+
+tests/example.spec.ts
