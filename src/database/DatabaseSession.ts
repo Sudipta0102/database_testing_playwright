@@ -1,4 +1,4 @@
-import { PoolClient, QueryResult } from "pg";
+import { PoolClient, QueryResult, QueryResultRow } from "pg";
 import { DatabasePool } from "./DatabasePool.js";
 
 /**
@@ -38,10 +38,10 @@ export class DatabaseSession{
     /**
      * Executes a sql query.
      */
-    async query(
+    async query<T extends QueryResultRow=QueryResultRow>(
         sql: string,
         params?: unknown[]
-    ): Promise<QueryResult>{
+    ): Promise<QueryResult<T>>{
 
         if(!this.client){
             throw new Error("No active database session");

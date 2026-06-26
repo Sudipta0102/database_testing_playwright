@@ -1,5 +1,5 @@
 import { Pool, PoolClient } from 'pg';
-import { databaseConfig } from '../config/DatabaseConfig.js';
+import { databaseConfig } from './config/DatabaseConfig.js';
 
 /**
  * Responsibilities:

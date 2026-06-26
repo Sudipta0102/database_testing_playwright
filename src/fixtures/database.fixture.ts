@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { DatabaseSession } from "../infra/database/DatabaseSession.js"
+import { DatabaseSession } from '../database/DatabaseSession.js';
 
 type DatabaseFixtures = {
     db: DatabaseSession;

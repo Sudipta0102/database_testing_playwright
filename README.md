@@ -2,7 +2,7 @@
 
 ## Overview
 
-This framework is designed to support scalable database validation for end-to-end UI, API, and hybrid automation scenarios using **PostgreSQL** and **Playwright**.
+This framework is designed to support scalable database validation for end-to-end UI, API, and hybrid automation scenarios using **PostgreSQL** and **Playwright**. Implemented transaction-per-test isolation using BEGIN/ROLLBACK with Playwright fixtures.
 
 The architecture prioritizes:
 
@@ -13,6 +13,36 @@ The architecture prioritizes:
 * CI/CD compatibility
 
 The framework intentionally supports **DQL** (`SELECT`) and **DML** (`INSERT`, `UPDATE`, `DELETE`) operations. Schema migration (DDL) testing is considered outside the scope of the automation framework and should be executed independently.
+
+---
+
+## Running the Test Suite
+
+1. Clone the repository.
+2. Copy `.env.example` to `.env` and update the values if required.
+3. Start the PostgreSQL container:
+
+   ```bash
+   docker compose up -d
+   ```
+4. Install project dependencies:
+
+   ```bash
+   npm install
+   ```
+5. Install Playwright browsers:
+
+   ```bash
+   npx playwright install
+   ```
+6. Run the tests:
+
+   ```bash
+   npx playwright test
+   ```
+
+For detailed PostgreSQL setup instructions, see [docker/postgres/postgres_setup.md](docker/postgres/postgres_setup.md).
+
 
 ---
 
@@ -43,15 +73,12 @@ The database layer is designed around the following principles:
 
 ```text
 src/
-├── assertions/
-│   └── DatabaseAssertions.ts
-│
 ├── fixtures/
 │   └── database.fixture.ts
 │
-├── infra/
-│   └── database/
-│       ├── DatabaseConfig.ts
+├── database/
+│       ├──config
+│       │       └── DatabaseConfig.ts      
 │       ├── DatabasePool.ts
 │       └── DatabaseSession.ts
 │
@@ -61,10 +88,6 @@ src/
 │   ├── products/
 │   └── ...
 │
-├── factories/
-│   ├── UserFactory.ts
-│   ├── ProductFactory.ts
-│   └── ...
 │
 ├── types/
 │   ├── User.ts
@@ -123,20 +146,15 @@ The database fixture owns the transaction lifecycle.
 
 ```text
 beforeEach
-    │
-    ▼
+    ↓
 Acquire Connection
-    │
-    ▼
-BEGIN
-    │
-    ▼
-Execute Test
-    │
-    ▼
-ROLLBACK
-    │
-    ▼
+    ↓
+  BEGIN
+    ↓
+ Execute Test
+    ↓
+ ROLLBACK
+    ↓
 Release Connection
 ```
 
@@ -184,11 +202,9 @@ Internally:
 
 ```text
 Assertion
-    │
-    ▼
+    ↓
 Repository
-    │
-    ▼
+    ↓
 DatabaseSession
 ```
 
@@ -237,25 +253,20 @@ Benefits:
 # Test Execution Flow
 
 ```text
-Playwright Test
-        │
-        ▼
-database.fixture
-        │
-        ▼
-DatabaseSession
-        │
+  Playwright Test
+        ↓
+ database.fixture
+        ↓
+  DatabaseSession
+        ↓
       BEGIN
-        │
-        ▼
-Repositories
-        │
-        ▼
-DatabaseAssertions
-        │
-        ▼
-PostgreSQL
-        │
+        ↓
+   Repositories
+        ↓
+ DatabaseAssertions
+        ↓
+    PostgreSQL
+        ↓
      ROLLBACK
 ```
 
@@ -284,18 +295,14 @@ The recommended CI strategy is:
 
 ```text
 Start PostgreSQL Container
-        │
-        ▼
-Run migrations
-        │
-        ▼
-Seed database
-        │
-        ▼
+        ↓
+  Run migrations
+        ↓
+   Seed database
+        ↓
 Execute Playwright tests
-        │
-        ▼
-Destroy container
+        ↓
+  Destroy container
 ```
 
 Each pipeline executes against a fresh PostgreSQL instance.
@@ -314,9 +321,7 @@ Typical target scale:
 * Parallel Playwright workers
 * Multiple engineers contributing simultaneously
 
-The separation of configuration, infrastructure, repositories, assertions, and fixtures minimizes coupling and allows each layer to evolve independently.
-
-Repositories are grouped by business domain rather than accumulating into a single folder, improving discoverability and maintainability as the application grows.
+The separation of configuration, infrastructure, repositories and fixtures minimizes coupling and allows each layer to evolve independently.
 
 ---
 
