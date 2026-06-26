@@ -13,4 +13,4 @@ node_modules/
 #.env.*
 #!.env.example
 
-tests/example.spec.ts
+#tests/example.spec.ts
