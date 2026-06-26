@@ -1,5 +1,5 @@
-import { DatabaseSession } from "../../database/DatabaseSession.js";
-import { Permission } from "../../types/Permission.js";
+import { DatabaseSession } from "../../database/DatabaseSession";
+import { Permission } from "../../types/Permission";
 
 interface ExistsRow {
     exists: boolean;

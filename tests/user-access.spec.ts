@@ -1,8 +1,8 @@
-import { test, expect } from "../src/fixtures/database.fixture.js";
+import { test, expect } from "../src/fixtures/database.fixture";
 
-import { UserRepository } from "../src/repositories/auth/UserRepository.js";
-import { RoleRepository } from "../src/repositories/auth/RoleRepository.js";
-import { PermissionRepository } from "../src/repositories/auth/PermissionRepository.js";
+import { UserRepository } from "../src/repositories/auth/UserRepository";
+import { RoleRepository } from "../src/repositories/auth/RoleRepository";
+import { PermissionRepository } from "../src/repositories/auth/PermissionRepository";
 
 test.describe("Repository composition", () => {
     test("should assign a role and verify inherited permissions", async ({ db }) => {

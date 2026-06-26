@@ -1,4 +1,4 @@
-import { DatabaseSession } from "../../database/DatabaseSession.js";
+import { DatabaseSession } from "../../database/DatabaseSession";
 
 interface UserRoleRow {
     userId: number;
