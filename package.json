@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "db:start": "docker compose up -d",
+    "db:stop": "docker compose down",
+    "db:restart": "docker compose down && docker compose up -d",
+    "db:reset": "docker compose down -v && docker compose up -d",
+    "db:logs": "docker compose logs -f postgres",
+
+    "test": "playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
