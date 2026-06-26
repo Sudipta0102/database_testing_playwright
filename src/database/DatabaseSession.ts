@@ -1,5 +1,5 @@
 import { PoolClient, QueryResult, QueryResultRow } from "pg";
-import { DatabasePool } from "./DatabasePool.js";
+import { DatabasePool } from "./DatabasePool";
 
 /**
  * Represents a single database session

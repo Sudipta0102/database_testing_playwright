@@ -1,4 +1,4 @@
-import { test, expect } from "../src/fixtures/database.fixture.js";
+import { test, expect } from "../src/fixtures/database.fixture";
 
 /**
  * serial mode is used just to test trnsaction-per-test which is defined 

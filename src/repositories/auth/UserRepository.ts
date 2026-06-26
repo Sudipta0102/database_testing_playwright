@@ -1,5 +1,5 @@
-import { DatabaseSession } from "../../database/DatabaseSession.js";
-import { User } from "../../types/User.js";
+import { DatabaseSession } from "../../database/DatabaseSession";
+import { User } from "../../types/User";
 
 interface UserRow{
     id: number;

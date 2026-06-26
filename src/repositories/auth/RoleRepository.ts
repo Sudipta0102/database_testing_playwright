@@ -1,5 +1,5 @@
-import { DatabaseSession } from "../../database/DatabaseSession.js";
-import { Role } from "../../types/Role.js";
+import { DatabaseSession } from "../../database/DatabaseSession";
+import { Role } from "../../types/Role";
 
 interface RoleRow {
     id: number;
